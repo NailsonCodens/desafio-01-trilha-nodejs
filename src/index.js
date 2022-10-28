@@ -90,7 +90,7 @@ app.patch("/todos/:id/done", checksExistsUserAccount, (request, response) => {
 });
 
 app.delete("/todos/:id", checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+  // Complete aqui teste
 });
 
 module.exports = app;
