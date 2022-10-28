@@ -86,11 +86,33 @@ app.put("/todos/:id", checksExistsUserAccount, (request, response) => {
 });
 
 app.patch("/todos/:id/done", checksExistsUserAccount, (request, response) => {
-  // Complete
+  const { id } = request.params;
+  const { user } = request;
+
+  const todoDone = user.todos.find((todo) => todo.id === id);
+
+  if (!todoDone) {
+    return response.status(404).json({ error: "Todos notfound" });
+  }
+
+  todoDone.done = true;
+
+  return response.json(todoDone);
 });
 
 app.delete("/todos/:id", checksExistsUserAccount, (request, response) => {
-  // Complete aqui
+  const { id } = request.params;
+  const { user } = request;
+
+  const todoIndex = user.todos.findIndex((todo) => todo.id === id);
+
+  if (todoIndex === -1) {
+    return response.status(404).json({ error: "Todos notfound" });
+  }
+
+  user.todos.splice(todoIndex, 1);
+
+  return response.status(204).json();
 });
 
 module.exports = app;
